@@ -22,7 +22,7 @@
  *
  *
  */
-package com.yc.concurrency.reorder;
+package com.yc.concurrency.countdownlatch;
 
 import org.junit.Test;
 import java.util.concurrent.CountDownLatch;
