@@ -25,13 +25,12 @@
 package com.yc.concurrency.reorder;
 
 import org.junit.Test;
-
 import java.util.concurrent.CountDownLatch;
 
 
 /**
 * @ClassName: CountDownLatchTest
-* @Description: TODO(这里用一句话描述这个类的作用)
+* @Description: CountDownLatch测试类
 * @author Yue Chang 
 * @date 2018年1月16日 上午11:31:26 
 * @since 1.0
