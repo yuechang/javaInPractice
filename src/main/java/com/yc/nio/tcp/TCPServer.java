@@ -109,7 +109,7 @@ public class TCPServer {
 
             // 输出到通道
             client.write(send);
-
+            // 服务端向客户端发送数据
             selectionKey.interestOps(SelectionKey.OP_READ);
         }
     }

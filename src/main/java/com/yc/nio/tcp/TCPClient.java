@@ -87,12 +87,12 @@ public class TCPClient {
                 SelectionKey key = iterator.next();
 
                 // 必须有程序员手动操作
-                iterator.remove();;
+                iterator.remove();
 
                 sc = (SocketChannel) key.channel();
 
                 if(key.isConnectable()){
-                    // 结束连接，以完成整改连接过程
+                    // 结束连接，以完成整个连接过程
                     sc.finishConnect();
                     System.out.println("connect completely");
                     try {
@@ -103,16 +103,20 @@ public class TCPClient {
 
                 }else if (key.isReadable()){
                     try {
+                        // 清空缓存
                         receive.clear();
+                        // 将数据接入到receive中
                         sc.read(receive);
+
                         System.out.println(new String(receive.array()));
                     } catch (IOException e){
                         e.printStackTrace();
                     }
                 }else if(key.isWritable()){
-                    receive.flip();
                     try {
+                        // 发送字符翻转
                         send.flip();
+                        // 客户端发送消息到服务端
                         sc.write(send);
                     } catch (IOException e){
                         e.printStackTrace();
