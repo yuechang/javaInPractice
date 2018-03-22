@@ -16,11 +16,11 @@ import java.util.concurrent.Executors;
 
 /**
  * @author Yue Chang
- * @ClassName: MyClient
+ * @ClassName: TCPClient
  * @Description: 客户端
  * @date 2018/3/22 9:25
  */
-public class MyClient {
+public class TCPClient {
 
     public static void main(String[] args) throws IOException {
 
@@ -28,7 +28,7 @@ public class MyClient {
 
         Runnable runnableClient1 = new Runnable() {
             public void run() {
-                MyClient client = new MyClient();
+                TCPClient client = new TCPClient();
                 try {
                     client.work(8080," client1...");
                 } catch (IOException e) {
@@ -39,7 +39,7 @@ public class MyClient {
 
         Runnable runnableClient2 = new Runnable() {
             public void run() {
-                MyClient client2 = new MyClient();
+                TCPClient client2 = new TCPClient();
                 try {
                     client2.work(8080,"client2...");
                 } catch (IOException e) {
@@ -78,7 +78,7 @@ public class MyClient {
 
         while(true){
             // 选择
-            if(selector.select() == 0){
+            if(null == selector || selector.select() == 0){
                 continue;
             }
             Iterator<SelectionKey> iterator = selector.selectedKeys().iterator();

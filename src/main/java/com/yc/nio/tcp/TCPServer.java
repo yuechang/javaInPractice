@@ -17,16 +17,16 @@ import java.util.Set;
 
 /**
  * @author Yue Chang
- * @ClassName: MyServer
+ * @ClassName: TCPServer
  * @Description: 服务器端
  * @date 2018/3/21 18:08
  */
-public class MyServer {
+public class TCPServer {
 
     public static void main(String[] args) throws IOException {
         // 通过open()方法找到Selector
         Selector selector = Selector.open();
-        MyServer server = new MyServer(8080,selector);
+        TCPServer server = new TCPServer(8080,selector);
         server.listen(selector);
     }
 
@@ -34,7 +34,7 @@ public class MyServer {
     private ByteBuffer send = ByteBuffer.allocate(1024);
     private ByteBuffer receive = ByteBuffer.allocate(1024);
 
-    public MyServer(int port,Selector selector) throws IOException {
+    public TCPServer(int port, Selector selector) throws IOException {
 
         // 打开服务器套接字通道
         ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
@@ -89,31 +89,28 @@ public class MyServer {
             client.configureBlocking(false);
             // 注册到selector，等待连接
             client.register(selector,SelectionKey.OP_READ | SelectionKey.OP_WRITE);
-        }else {
+        }else if(selectionKey.isReadable()){
+            // 返回位置创建此键的通道
+            client = (SocketChannel) selectionKey.channel();
+            // 将缓存区清空以备下次读取
+            receive.clear();
+            // 读取服务器发送来的数据到缓存区
+            client.read(receive);
 
-            if(selectionKey.isReadable()){
-                // 返回位置创建此键的通道
-                client = (SocketChannel) selectionKey.channel();
-                // 将缓存区清空以备下次读取
-                receive.clear();
-                // 读取服务器发送来的数据到缓存区
-                client.read(receive);
+            System.out.println(new String(receive.array()));
 
-                System.out.println(new String(receive.array()));
+            selectionKey.interestOps(SelectionKey.OP_WRITE);
+        }else if (selectionKey.isWritable()){
 
-                selectionKey.interestOps(SelectionKey.OP_WRITE);
-            }else if (selectionKey.isWritable()){
+            // 将缓存区清空以备下次写入
+            send.flip();
+            // 返回位置创建此键的通道
+            client  = (SocketChannel) selectionKey.channel();
 
-                // 将缓存区清空以备下次写入
-                send.flip();
-                // 返回位置创建此键的通道
-                client  = (SocketChannel) selectionKey.channel();
+            // 输出到通道
+            client.write(send);
 
-                // 输出到通道
-                client.write(send);
-
-                selectionKey.interestOps(SelectionKey.OP_READ);
-            }
+            selectionKey.interestOps(SelectionKey.OP_READ);
         }
     }
 }
