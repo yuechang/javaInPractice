@@ -4,8 +4,6 @@
  */
 package com.yc.nio.tcp;
 
-
-
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
@@ -26,17 +24,17 @@ import java.util.Set;
 public class MyServer {
 
     public static void main(String[] args) throws IOException {
-        MyServer server = new MyServer(8080);
-        server.listen();
+        // 通过open()方法找到Selector
+        Selector selector = Selector.open();
+        MyServer server = new MyServer(8080,selector);
+        server.listen(selector);
     }
 
     // 接收和发送数据缓存区
     private ByteBuffer send = ByteBuffer.allocate(1024);
     private ByteBuffer receive = ByteBuffer.allocate(1024);
 
-    Selector selector = null;
-
-    public MyServer(int port) throws IOException {
+    public MyServer(int port,Selector selector) throws IOException {
 
         // 打开服务器套接字通道
         ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
@@ -46,8 +44,6 @@ public class MyServer {
         ServerSocket serverSocket = serverSocketChannel.socket();
         // 进行服务的绑定
         serverSocket.bind(new InetSocketAddress(port));
-        // 通过open()方法找到Selector
-        selector = Selector.open();
 
         // 注册到selector，等待连接
         serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
@@ -58,7 +54,7 @@ public class MyServer {
     }
 
     // 监听
-    private void listen() throws IOException{
+    private void listen(Selector selector) throws IOException{
         while(true){
 
             // 选择一组键，并且相应的通道已经打开
@@ -70,19 +66,16 @@ public class MyServer {
                 SelectionKey selectionKey = iterator.next();
                 // 这里记得手动的把他remove掉，不然selector中的selectedKys集合不会自动去除
                 iterator.remove();
-                dealKey(selectionKey);
+                dealKey(selectionKey,selector);
             }
         }
     }
 
     // 处理请求
-    private void dealKey(SelectionKey selectionKey) throws IOException {
+    private void dealKey(SelectionKey selectionKey,Selector selector) throws IOException {
 
         ServerSocketChannel server = null;
         SocketChannel client = null;
-        String receiveText;
-        String sendText;
-        int count = 0;
 
         // 测试此键的通道是否已准备好接受新的套接字连接
         if(selectionKey.isAcceptable()){
@@ -100,7 +93,7 @@ public class MyServer {
 
             if(selectionKey.isReadable()){
                 // 返回位置创建此键的通道
-                server = (ServerSocketChannel) selectionKey.channel();
+                client = (SocketChannel) selectionKey.channel();
                 // 将缓存区清空以备下次读取
                 receive.clear();
                 // 读取服务器发送来的数据到缓存区
@@ -114,7 +107,7 @@ public class MyServer {
                 // 将缓存区清空以备下次写入
                 send.flip();
                 // 返回位置创建此键的通道
-                server = (ServerSocketChannel) selectionKey.channel();
+                client  = (SocketChannel) selectionKey.channel();
 
                 // 输出到通道
                 client.write(send);
