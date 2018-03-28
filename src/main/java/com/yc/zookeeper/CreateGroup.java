@@ -17,18 +17,26 @@ import java.util.concurrent.CountDownLatch;
  */
 public class CreateGroup implements Watcher{
 
+    // 客户端连接服务器session的超时时间
     private static final int SESSION_TIMEOUT = 5000;
     private ZooKeeper zooKeeper;
-    private CountDownLatch countDownLatch = new CountDownLatch(1);
+    // 连接成功信号变量，
+    private CountDownLatch connectedSignal = new CountDownLatch(1);
 
     public void connect(String hosts) throws IOException, InterruptedException {
         zooKeeper = new ZooKeeper(hosts,SESSION_TIMEOUT,this);
-        countDownLatch.await();
+        // 阻塞当前线程，直到zookeeper准备就绪
+        connectedSignal.await();
     }
 
+    /**
+     *  负责接收Zookeeper数据变化时产生的事件回调
+     *  当客户端连接上了zookeeper服务器，Watcher将由process()函数接收一个连接成功的事件
+     * @param watchedEvent
+     */
     public void process(WatchedEvent watchedEvent) {
         if (watchedEvent.getState() == Event.KeeperState.SyncConnected){
-            countDownLatch.countDown();
+            connectedSignal.countDown();
         }
     }
 
@@ -49,6 +57,5 @@ public class CreateGroup implements Watcher{
         createGroup.create(args[1]);
         createGroup.close();
     }
-
 }
 
