@@ -2,7 +2,7 @@
  * Copyright(c) 2017 Yue Chang
  * MIT Licensed
  */
-package com.yc.zookeeper;
+package com.yc.zookeeper.group;
 
 import org.apache.zookeeper.*;
 
