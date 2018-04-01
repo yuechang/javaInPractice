@@ -2,7 +2,7 @@
  * Copyright(c) 2017 Yue Chang
  * MIT Licensed
  */
-package com.yc.zookeeper.application;
+package com.yc.zookeeper.application.configurationService;
 
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.WatchedEvent;
