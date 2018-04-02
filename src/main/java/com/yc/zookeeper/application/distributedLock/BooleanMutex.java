@@ -125,7 +125,7 @@ public class BooleanMutex {
                 // cas更新状态，避免并发更新true操作
                 if (compareAndSetState(s,TRUE)){
                     // 释放一下锁对象，唤醒一下阻塞的Thread
-                    releaseShared(0);
+                    releaseShared(FALSE);
                 }
             }
         }

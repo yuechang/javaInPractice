@@ -9,7 +9,6 @@ import org.apache.zookeeper.*;
 import org.apache.zookeeper.data.Stat;
 
 import java.io.IOException;
-import java.io.InterruptedIOException;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -31,7 +30,6 @@ public class DistributeLock {
     private String id;
     private LockNode idName;
     private String ownerId;
-    private String lastChildId;
     private Throwable other = null;
     private KeeperException exception = null;
     private InterruptedException interrupt = null;
@@ -118,7 +116,6 @@ public class DistributeLock {
         if (other != null){
             throw new Exception("",other);
         }
-
         return isOwner();
     }
 
@@ -137,7 +134,7 @@ public class DistributeLock {
     }
 
     /**
-     * 判断某path节点是否存在，不存在就创建
+     * 判断某path节点是否存在，不存在就创建,用来创建跟节点，PERSISTENT节点
      * @param path
      */
     private void ensureExists(final String path){
@@ -183,6 +180,11 @@ public class DistributeLock {
         return id;
     }
 
+    /**
+     * 执行lock操作，允许传递watch变量控制是否需要阻塞lock操作
+     * @param mutex
+     * @return
+     */
     private boolean acquireLock(final BooleanMutex mutex){
 
         try {
@@ -230,11 +232,12 @@ public class DistributeLock {
                             return isOwner();
                         }
 
+                        // 获得比idName小的集合
                         SortedSet<LockNode> lessThanMe = sortedNames.headSet(idName);
                         if (!lessThanMe.isEmpty()){
                             // 关注一下排队在自己之前的最近的一个节点
                             LockNode lastChildName = lessThanMe.last();
-                            lastChildId = lastChildName.getName();
+                            String lastChildId = lastChildName.getName();
                             // 异步watcher处理
                             Stat stat = zooKeeper.exists(root + "/" + lastChildId, new Watcher() {
                                 public void process(WatchedEvent watchedEvent) {

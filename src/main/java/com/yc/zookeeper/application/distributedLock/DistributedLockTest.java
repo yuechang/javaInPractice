@@ -29,9 +29,9 @@ public class DistributedLockTest {
                     try {
                         Thread.sleep(1000);
                         // 无阻塞获取锁
-                        node.tryLock();
+                        //boolean lockFlag = node.tryLock();
                         // 阻塞获取锁
-                        //node.lock();
+                        node.lock();
                         Thread.sleep(100);
                         System.out.println("id: " + node.getId() + " is leader: " + node.isOwner() );
                     } catch (InterruptedException e) {

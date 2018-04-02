@@ -7,7 +7,7 @@ package com.yc.zookeeper.application.distributedLock;
 /**
  * @author Yue Chang
  * @ClassName: LockNode
- * @Description: TODO
+ * @Description: 锁节点类
  * @date 2018/4/1 16:28
  */
 public class LockNode implements Comparable{
@@ -28,6 +28,7 @@ public class LockNode implements Comparable{
         this.name = name;
     }
 
+    // 根据字符串排序，从而获得有序的各个节点
     public int compareTo(Object object) {
 
         if (object instanceof LockNode){
