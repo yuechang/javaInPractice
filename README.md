@@ -1,1 +1,5 @@
-**Java Concurrency in Practice**
+**Java in Practice**
+ - concurrency
+ - nio
+ - redis
+ - zookeeper
