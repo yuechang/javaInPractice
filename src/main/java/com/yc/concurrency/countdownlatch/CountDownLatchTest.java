@@ -29,39 +29,54 @@ import java.util.concurrent.CountDownLatch;
 
 
 /**
-* @ClassName: CountDownLatchTest
-* @Description: CountDownLatch测试类
-* @author Yue Chang 
-* @date 2018年1月16日 上午11:31:26 
-* @since 1.0
-*/
+ * @ClassName: CountDownLatchTest
+ * @Description: CountDownLatch测试类
+ * @author Yue Chang
+ * @date 2018年1月16日 上午11:31:26
+ * @since 1.0
+ */
 public class CountDownLatchTest {
 
 	@Test
 	public void test() throws InterruptedException {
-		
+
 		CountDownLatch latch = new CountDownLatch(1);
-		
+
 		MyThread myThread = new MyThread(latch);
 		Thread t1 = new Thread(myThread);
 		t1.setName("t1");
-		
+
 		Thread t2 = new Thread(myThread);
 		t2.setName("t2");
-		
+
 		t1.start();
 		t2.start();
-		
+
 		// junit主线程执行完之后，不会再去管子线程的执行情况，如果没有join(),那么大多数情况下子线程没法执行完
 		t1.join();
+	}
+
+	public static void main(String[] args) {
+		CountDownLatch latch = new CountDownLatch(1);
+
+		MyThread myThread = new MyThread(latch);
+		Thread t1 = new Thread(myThread);
+		t1.setName("t1");
+
+		Thread t2 = new Thread(myThread);
+		t2.setName("t2");
+
+		t1.start();
+		t2.start();
+
 	}
 }
 
 class MyThread implements Runnable{
-	
+
 	private CountDownLatch latch;
 	private volatile int number;
-	
+
 	/**
 	 * @param latch
 	 */
@@ -89,7 +104,7 @@ class MyThread implements Runnable{
 	}
 
 	public void run() {
-		
+
 		String threadName = Thread.currentThread().getName().trim();
 		if ("t2".equals(threadName)) { // t2线程
 			try {
