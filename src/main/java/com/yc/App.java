@@ -2,7 +2,6 @@ package com.yc;
 
 /**
  * Hello world!
- *
  */
 public class App 
 {
