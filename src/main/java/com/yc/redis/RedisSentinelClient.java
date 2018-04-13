@@ -33,6 +33,7 @@ public class RedisSentinelClient {
         Jedis resource = jedisSentinelPool.getResource();
         String value = resource.get("key");
         System.out.println(value);//获得键a对应的value值
+        // 关闭连接
         resource.close();
     }
 }
