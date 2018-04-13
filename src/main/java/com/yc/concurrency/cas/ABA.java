@@ -23,7 +23,7 @@ public class ABA {
     private static AtomicStampedReference<Integer> atomicStampedReference
             = new AtomicStampedReference<>(expectedReference,0);
 
-
+    // 测试提交
     public static void main(String[] args) throws InterruptedException {
         Thread thread = new Thread(new Runnable() {
             @Override
