@@ -26,14 +26,20 @@ public class MultiThread {
             System.out.println("["+threadInfo.getThreadId() + "]" + threadInfo.getThreadName());
         }
 
-        /*
-        输出信息：
-        [6]Monitor Ctrl-Break
-        [5]Attach Listener
-        [4]Signal Dispatcher
-        [3]Finalizer
-        [2]Reference Handler
-        [1]main
-        */
     }
 }
+/*
+环境信息：
+windows 7
+jdk1.8.0_101
+输出信息：
+[6]Monitor Ctrl-Break
+[5]Attach Listener
+[4]Signal Dispatcher
+[3]Finalizer
+[2]Reference Handler
+[1]main
+
+可以看到，一个Java程序的运行不仅仅是main()方法的运行，
+而是main线程和多个其他线程的同时运行
+*/
