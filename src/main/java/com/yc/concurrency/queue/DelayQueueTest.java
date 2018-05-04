@@ -16,13 +16,13 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class DelayQueueTest {
 
-    private static final DelayQueue delayQueue = new DelayQueue();
+    private static volatile DelayQueue delayQueue = new DelayQueue();
     private static final AtomicLong sequencer = new AtomicLong(0);
 
     class ScheduledFutureTask<V> extends FutureTask<V> implements RunnableScheduledFuture<V> {
 
         private long time;
-        private long period;
+        private boolean period;
         private long sequenceNumber;
 
         /**
@@ -32,21 +32,21 @@ public class DelayQueueTest {
          * @param period
          * @param sequenceNumber 标识元素在队列中的先后顺序
          */
-        public ScheduledFutureTask(Runnable runnable, V result, long time, long period, long sequenceNumber) {
+        public ScheduledFutureTask(Runnable runnable, V result, long time, boolean period) {
             super(runnable, result);
             this.time = time;
             this.period = period;
-            this.sequenceNumber = sequenceNumber;
+            this.sequenceNumber = sequencer.incrementAndGet();
         }
 
 
         /**
-         *
+         * 是否为定时执行任务
          * @return
          */
         @Override
         public boolean isPeriodic() {
-            return false;
+            return period;
         }
 
         // 返回当前元素还需要延时多长时间，单位是纳秒
@@ -62,8 +62,7 @@ public class DelayQueueTest {
         @Override
         public int compareTo(Delayed other) {
 
-
-            //
+            // 如果是它本身，返回0，表示相等
             if (other == this)
                 return 0;
             if (other instanceof ScheduledFutureTask) {
@@ -83,5 +82,13 @@ public class DelayQueueTest {
         }
     }
 
+    public void schedule(Runnable runnable,long delay, TimeUnit unit) {
+
+        long time = unit.convert(delay + System.nanoTime(), TimeUnit.NANOSECONDS);
+        ScheduledFutureTask scheduledFutureTask = new ScheduledFutureTask(runnable, null, time, false);
+        delayQueue.add(scheduledFutureTask);
+
+
+    }
 
 }
