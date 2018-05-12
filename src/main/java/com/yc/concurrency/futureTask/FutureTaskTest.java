@@ -13,7 +13,7 @@ import java.util.concurrent.*;
  * @date 2018/5/8 21:55
  */
 public class FutureTaskTest {
-    //
+    // 线程名称与对应的返回结果对象
     private final ConcurrentMap<Object, Future<String>> taskCache = new ConcurrentHashMap<>();
 
     private String executionTask(final String taskName) throws ExecutionException, InterruptedException {
@@ -69,6 +69,13 @@ public class FutureTaskTest {
             }
         }
     }
-
 }
+/*
+输出结果：
+Thread-0,futureTask
 
+当一个线程需要等待另一个线程把某个任务执行完后它才能继续执行，此时可以使用FutureTask
+
+当多个线程试图同时执行同一个任务时，只允许一个线程执行任务，
+其他线程需要等待这个任务执行完后才能继续执行
+ */
