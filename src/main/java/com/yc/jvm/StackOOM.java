@@ -9,6 +9,7 @@ package com.yc.jvm;
  * @ClassName: StackOOM
  * @Description: 创建线程导致栈内存溢出示例
  * @date 2018/5/14 19:47
+ * VM args: -Xss2M
  */
 public class StackOOM {
 
