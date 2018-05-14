@@ -31,6 +31,10 @@ windows 7
 jdk1.8.0_101
 VM args：-Xms20m -Xmx20m -XX:+HeapDumpOnOutOfMemoryError
 
+代码分析：
+Java堆用于存储对象实例，只要不断地创建对象，并且保证GC Roots到对象之间有可达路径来避免垃圾回收机制清除这些对象，
+那么在对象数量达到最大堆的容量限制后就会产生内存溢出异常
+
 程序输出：
 java.lang.OutOfMemoryError: Java heap space
 Dumping heap to java_pid10312.hprof ...
@@ -43,6 +47,4 @@ Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
 	at java.util.ArrayList.ensureCapacityInternal(ArrayList.java:227)
 	at java.util.ArrayList.add(ArrayList.java:458)
 	at com.yc.jvm.HeapOOM.main(HeapOOM.java:24)
-
-
  */
