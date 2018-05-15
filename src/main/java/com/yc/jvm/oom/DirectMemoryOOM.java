@@ -2,7 +2,7 @@
  * Copyright(c) 2017 Yue Chang
  * MIT Licensed
  */
-package com.yc.jvm;
+package com.yc.jvm.oom;
 
 import sun.misc.Unsafe;
 
@@ -43,5 +43,5 @@ DirectMemory容量可以通过-XX:MaxDirectMemorySize指定，如果不指定，
 程序输出：
 Exception in thread "main" java.lang.OutOfMemoryError
 	at sun.misc.Unsafe.allocateMemory(Native Method)
-	at com.yc.jvm.DirectMemoryOOM.main(DirectMemoryOOM.java:28)
+	at com.yc.jvm.oom.DirectMemoryOOM.main(DirectMemoryOOM.java:28)
  */
