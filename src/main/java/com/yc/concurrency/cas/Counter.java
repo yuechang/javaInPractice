@@ -21,7 +21,7 @@ public class Counter{
     public static void main(String[] args) throws InterruptedException {
 
         long startTimeMillis = System.currentTimeMillis();
-        Counter counter = new Counter();
+        final Counter counter = new Counter();
         List<Thread> threadList = new ArrayList<>();
         for (int i = 0 ; i < 100 ; i++){
             Thread thread = new Thread(new Runnable() {
