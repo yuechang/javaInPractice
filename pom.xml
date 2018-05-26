@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.yc</groupId>
-  <artifactId>concurrency</artifactId>
+  <artifactId>javaInPractice</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>concurrency</name>
+  <name>javaInPractice</name>
   <url>http://maven.apache.org</url>
 
   <properties>
