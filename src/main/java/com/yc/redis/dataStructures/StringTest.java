@@ -81,6 +81,9 @@ public class StringTest {
         Long expireResult = jedis.expire(key, expireTime);
         System.out.println("expire(" + key + "," + expireTime + ") return : " + expireResult);
 
+        String typeResult = jedis.type(key);
+        System.out.println("type(" + key + ")  return : " + typeResult);
+
         // 判断key是否存在
         existsResult = jedis.exists(key);
         System.out.println("exists(" + key + ")  return : " + existsResult);
@@ -111,6 +114,7 @@ del(key) return : 1
 setnx(key,value) return : 1
 setnx(key,value) return : 0
 expire(key,5) return : 1
+type(key)  return : string
 exists(key)  return : true
 ---------休眠5秒---------
 exists(key)  return : false
