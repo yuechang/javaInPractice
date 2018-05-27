@@ -17,10 +17,23 @@ import java.util.concurrent.TimeUnit;
  */
 public class StringTest {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
 
-        Jedis jedis = JedisUtil.getJedis(args[0], Integer.valueOf(args[1]), args[2]);
+        Jedis jedis = null;
+        try {
+            // 获取jedis连接
+            jedis = JedisUtil.getJedis(args[0], Integer.valueOf(args[1]), args[2]);
+            // 测试string数据结构
+            stringTest(jedis);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // 释放jedis连接
+            JedisUtil.close(jedis);
+        }
+    }
 
+    private static void stringTest(Jedis jedis) throws InterruptedException {
         String key = "key";
         String strValue = "value";
         int stepLength = 10;

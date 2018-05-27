@@ -21,7 +21,22 @@ import java.util.Set;
 public class MapTest {
 
     public static void main(String[] args) {
-        Jedis jedis = JedisUtil.getJedis(args[0], Integer.valueOf(args[1]), args[2]);
+
+        Jedis jedis = null;
+        try {
+            // 获取jedis连接
+            jedis = JedisUtil.getJedis(args[0], Integer.valueOf(args[1]), args[2]);
+            // 测试map数据结构
+            mapTest(jedis);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // 释放jedis连接
+            JedisUtil.close(jedis);
+        }
+    }
+
+    private static void mapTest(Jedis jedis) {
 
         String MAP_KEY = "mapKey";
         String ID = "id";
@@ -99,8 +114,6 @@ public class MapTest {
         System.out.println("hsetnx(" + MAP_KEY + "," + PHONE_NUMBER + "," + PHONE_NUMER_VALUE + ")" + " return : " + hsetnxResult);
         hsetnxResult = jedis.hsetnx(MAP_KEY, PHONE_NUMBER, PHONE_NUMER_VALUE);
         System.out.println("hsetnx(" + MAP_KEY + "," + PHONE_NUMBER + "," + PHONE_NUMER_VALUE + ")" + " return : " + hsetnxResult);
-
-
     }
 }
 /*
