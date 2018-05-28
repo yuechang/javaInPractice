@@ -70,6 +70,9 @@ public class SetTest {
         // 返回set的元素个数
         Long scardResult = jedis.scard(SET_KEY);
         System.out.println("scard(" + SET_KEY + ")" + " return : " + scardResult);
+
+        jedis.del(SET_KEY);
+
     }
 }
 /*

@@ -114,6 +114,9 @@ public class MapTest {
         System.out.println("hsetnx(" + MAP_KEY + "," + PHONE_NUMBER + "," + PHONE_NUMER_VALUE + ")" + " return : " + hsetnxResult);
         hsetnxResult = jedis.hsetnx(MAP_KEY, PHONE_NUMBER, PHONE_NUMER_VALUE);
         System.out.println("hsetnx(" + MAP_KEY + "," + PHONE_NUMBER + "," + PHONE_NUMER_VALUE + ")" + " return : " + hsetnxResult);
+
+        jedis.del(MAP_KEY);
+
     }
 }
 /*
