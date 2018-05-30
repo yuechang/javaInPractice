@@ -36,15 +36,16 @@ public class SortedSetTest {
 
     private static void sortedSetTest(Jedis jedis) {
 
+        // 有序集键
         String SORTED_SET_KEY = "sortedSetKey";
+        // 有序集分值
         int SORTED_SET_SCORE_1 = 1;
         int SORTED_SET_SCORE_2 = 2;
         int SORTED_SET_SCORE_3 = 3;
-
         double SORTED_SET_SCORE_DOUBLE_4 = 4;
         double SORTED_SET_SCORE_DOUBLE_5 = 5;
         double SORTED_SET_SCORE_DOUBLE_6 = 6;
-
+        // 有序集成员
         String SORTED_SET_MEMBER_1 = "member1";
         String SORTED_SET_MEMBER_2 = "member2";
         String SORTED_SET_MEMBER_3 = "member3";
@@ -52,20 +53,19 @@ public class SortedSetTest {
         String SORTED_SET_MEMBER_5 = "member5";
         String SORTED_SET_MEMBER_6 = "member6";
         String SORTED_SET_MEMBER_7 = "member7";
-
-        int MIN_SCORE = 1;
+        // 最大最小分值
         int MAX_SCORE = 10;
-
+        int MIN_SCORE = 1;
+        // 分值
         int SCORE = 9;
-
-        int START_INDEX = 0;
+        // 最大最小索引
         int END_INDEX = -1;
-
+        int START_INDEX = 0;
+        // 最小排名
         int FIRST_RANK = 0;
-
-
-
-
+        // 大于小于等于之类的
+        String LEFT_PARENTHESIS = "(";
+        String LEFT_BRACKET = "[";
 
         // 将一个member元素和对应score值加入到有序集当中，在redis存入的为有序的。返回存入个数，1：成功存入1个，0：未存入
         Long zaddResult = jedis.zadd(SORTED_SET_KEY, SORTED_SET_SCORE_2, SORTED_SET_MEMBER_2);
@@ -137,31 +137,41 @@ public class SortedSetTest {
         zrangeResult = jedis.zrange(SORTED_SET_KEY, START_INDEX, END_INDEX);
         System.out.println("zrange(" + SORTED_SET_KEY + "," + START_INDEX + "," + END_INDEX + ")" + " return : " + zrangeResult);
 
-        // 计算给定的一个或者多个有序集的并集，其中给定key的数量必须以numkeys参数指定，并将并集存入到destination
-        //jedis.sunionstore();
-
-        // 计算给定的一个或多个有序集的交集，其中给定key的数量
-        //jedis.sinterstore()
-
         // 返回有序集成员(member)值介于min和max之间的成员
-        //jedis.zrangeByLex()
+        Set<String> zrangeByLexResult = jedis.zrangeByLex(SORTED_SET_KEY,
+                LEFT_BRACKET.concat(SORTED_SET_MEMBER_1),
+                LEFT_BRACKET.concat(SORTED_SET_MEMBER_7));
+        System.out.println("zrangeByLex(" + SORTED_SET_KEY + "," +
+                LEFT_BRACKET.concat(SORTED_SET_MEMBER_1) + "," +
+                LEFT_BRACKET.concat(SORTED_SET_MEMBER_7) + ")" + " return : " + zrangeByLexResult);
+
 
         // 计算有序集中成员(member)的数量
-        //jedis.zlexcount()
+        Long zlexcountResult = jedis.zlexcount(SORTED_SET_KEY,
+                LEFT_BRACKET.concat(SORTED_SET_MEMBER_1),
+                LEFT_PARENTHESIS.concat(SORTED_SET_MEMBER_6));
+        System.out.println("zlexcount(" + SORTED_SET_KEY + "," +
+                LEFT_BRACKET.concat(SORTED_SET_MEMBER_1) + "," +
+                LEFT_PARENTHESIS.concat(SORTED_SET_MEMBER_6) + ")" + " return : " + zlexcountResult);
 
-        // 移除该集合中，成员(member)介于min和max范围内的所有元素。
-        //jedis.zremrangeByLex();
+        // 移除该集合中，成员(member)介于min和max范围内的所有元素,[:包括等于，（:不包括等于
+        Long zremrangeByLexResult = jedis.zremrangeByLex(SORTED_SET_KEY,
+                LEFT_BRACKET.concat(SORTED_SET_MEMBER_4),
+                LEFT_BRACKET.concat(SORTED_SET_MEMBER_4));
+        System.out.println("zremrangeByLexResult(" + SORTED_SET_KEY + "," +
+                LEFT_BRACKET.concat(SORTED_SET_MEMBER_4) + "," +
+                LEFT_BRACKET.concat(SORTED_SET_MEMBER_4) + ")" + " return : " + zremrangeByLexResult);
 
         // 删除有序集
-        //jedis.del(SORTED_SET_KEY);
+        jedis.del(SORTED_SET_KEY);
     }
 }
 /*
 程序输出：
 zadd(sortedSetKey,2,member2) return : 1
 zadd(sortedSetKey,1,member1) return : 1
-zadd(sortedSetKey,3,member3) return : 0
-zadd(sortedSetKey,{member6=6.0, member4=4.0, member5=5.0}) return : 1
+zadd(sortedSetKey,3,member3) return : 1
+zadd(sortedSetKey,{member6=6.0, member4=4.0, member5=5.0}) return : 3
 zscore(sortedSetKey,member1) return : 1.0
 zcard(sortedSetKey) return : 6
 zcount(sortedSetKey,1,10) return : 6
@@ -176,5 +186,8 @@ zrem(sortedSetKey,member1) return : 1
 zremrangeByRank(sortedSetKey,0,0) return : 1
 zremrangeByScore(sortedSetKey,3,3) return : 1
 zrange(sortedSetKey,0,-1) return : [member4, member5, member6]
+zrangeByLex(sortedSetKey,[member1,[member7) return : [member4, member5, member6]
+zlexcount(sortedSetKey,[member1,(member6) return : 2
+zremrangeByLexResult(sortedSetKey,[member4,[member4) return : 1
 
  */
