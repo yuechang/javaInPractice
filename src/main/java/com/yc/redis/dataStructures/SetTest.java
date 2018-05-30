@@ -7,6 +7,7 @@ package com.yc.redis.dataStructures;
 import com.yc.redis.base.JedisUtil;
 import redis.clients.jedis.Jedis;
 
+import java.util.HashMap;
 import java.util.Set;
 
 /**
@@ -33,6 +34,12 @@ public class SetTest {
     }
 
     private static void setTest(Jedis jedis) {
+
+        String ANOTHER_SET_KEY = "anotherSetKey";
+        // set并集KEY
+        String UNION_STORE_KEY = "unionstoreKey";
+        // set交集KEY
+        String INTER_STORE_KEY = "interstoreKey";
 
         String SET_KEY = "setKey";
         String SET_VALUE_ONE = "value01";
@@ -71,19 +78,46 @@ public class SetTest {
         Long scardResult = jedis.scard(SET_KEY);
         System.out.println("scard(" + SET_KEY + ")" + " return : " + scardResult);
 
-        jedis.del(SET_KEY);
+        // 给另一个set集合添加值
+        saddResult = jedis.sadd(ANOTHER_SET_KEY, SET_VALUE_ONE, SET_VALUE_TWO,
+                SET_VALUE_THREE, SET_VALUE_FOUR, SET_VALUE_FIVE);
+        System.out.println("zadd(" + ANOTHER_SET_KEY + "," + SET_VALUE_ONE + "," + SET_VALUE_TWO +
+                "," + SET_VALUE_THREE + "," + SET_VALUE_FOUR + "," + SET_VALUE_FIVE +
+                ")" + " return : " + saddResult);
 
+        // 计算给定的一个或者多个set集合的并集，并将并集存入到destination
+        Long sunionstoreResult = jedis.sunionstore(UNION_STORE_KEY, SET_KEY, ANOTHER_SET_KEY);
+        System.out.println("sunionstore(" + UNION_STORE_KEY + ","
+                + SET_KEY + "," + ANOTHER_SET_KEY + ")" + " return : " + sunionstoreResult);
+        // 取得set中的所有的值
+        smembersResult = jedis.smembers(UNION_STORE_KEY);
+        System.out.println("smembers(" + UNION_STORE_KEY + ")" + " return : " + smembersResult);
+
+        // 计算给定的一个或者多个set集合的并集，并将并集存入到destination
+        Long sinterstoreResult = jedis.sinterstore(UNION_STORE_KEY, SET_KEY, ANOTHER_SET_KEY);
+        System.out.println("sinterstore(" + UNION_STORE_KEY + ","
+                + SET_KEY + "," + ANOTHER_SET_KEY + ")" + " return : " + sinterstoreResult);
+        // 取得set中的所有的值
+        smembersResult = jedis.smembers(UNION_STORE_KEY);
+        System.out.println("smembers(" + UNION_STORE_KEY + ")" + " return : " + smembersResult);
+
+        jedis.del(SET_KEY);
     }
 }
 /*
 程序输出：
-sadd(setKey,value01,value02,value03,value04) return : 0
-smembers(setKey) return : [value02, value03, value04, value01]
+sadd(setKey,value01,value02,value03,value04) return : 2
+smembers(setKey) return : [value02, value01, value03, value04]
 sismember(setKey,value01) return : true
 sismember(setKey,value05) return : false
-srandmember(setKey) return : value01
+srandmember(setKey) return : value03
 srem(setKey,value04,value04) return : 2
 scard(setKey) return : 2
+zadd(anotherSetKey,value01,value02,value03,value04,value05) return : 0
+sunionstore(unionstoreKey,setKey,anotherSetKey) return : 5
+smembers(unionstoreKey) return : [value05, value03, value02, value04, value01]
+sinterstore(unionstoreKey,setKey,anotherSetKey) return : 2
+smembers(unionstoreKey) return : [value01, value02]
 
 srandmember(setKey)随机获取元素的程序输出结果可能会不一样
  */
