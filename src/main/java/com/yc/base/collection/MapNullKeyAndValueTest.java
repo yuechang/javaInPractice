@@ -2,7 +2,7 @@
  * Copyright(c) 2017 Yue Chang
  * MIT Licensed
  */
-package com.yc.concurrency.map;
+package com.yc.base.collection;
 
 import java.util.HashMap;
 import java.util.Hashtable;
