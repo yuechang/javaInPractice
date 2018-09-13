@@ -96,14 +96,16 @@ public class ListSubListTest {
 
 程序结果：
 java.lang.ClassCastException: java.util.ArrayList$SubList cannot be cast to java.util.ArrayList
-	at com.yc.base.collection.ListSubListTest.testSubListToArrayList(ListSubListTest.java:55)
+	at com.yc.base.collection.ListSubListTest.testSubListToArrayList(ListSubListTest.java:32)
 	at com.yc.base.collection.ListSubListTest.main(ListSubListTest.java:18)
 java.util.ConcurrentModificationException
 	at java.util.ArrayList$SubList.checkForComodification(ArrayList.java:1231)
 	at java.util.ArrayList$SubList.listIterator(ArrayList.java:1091)
 	at java.util.AbstractList.listIterator(AbstractList.java:299)
 	at java.util.ArrayList$SubList.iterator(ArrayList.java:1087)
-	at com.yc.base.collection.ListSubListTest.testSubList(ListSubListTest.java:36)
+	at com.yc.base.collection.ListSubListTest.testSubList(ListSubListTest.java:53)
 	at com.yc.base.collection.ListSubListTest.main(ListSubListTest.java:19)
+arr:[Ljava.lang.String;@16b3fc9e
+tempArr:[Ljava.lang.Object;@e2d56bf
 
  */
