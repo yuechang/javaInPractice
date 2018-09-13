@@ -83,7 +83,7 @@ public class ListSubListTest {
 
 }
 /*
-
+Java开发书册List集合规则：
 2. 【强制】 ArrayList的subList结果不可强转成ArrayList，否则会抛出ClassCastException异常，
 即java.util.RandomAccessSubList cannot be cast to java.util.ArrayList.
 说明：subList 返回的是 ArrayList 的内部类 SubList，并不是 ArrayList ，
