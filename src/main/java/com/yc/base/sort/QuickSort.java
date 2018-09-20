@@ -12,6 +12,16 @@ package com.yc.base.sort;
  */
 public class QuickSort {
 
+    public static void main(String[] args) {
+        int data[] = {5,4,7,8,2,7,8,5,6,3};
+        for (int i = 0; i < data.length; i++) {
+            System.out.print(data[i]);
+            System.out.print(" ");
+        }
+        System.out.println();
+        QuickSort.sort(data, 0, data.length - 1);
+    }
+
     public static void sort(int data[], int low, int hight){
         QuickSort qs = new QuickSort();
 
@@ -36,8 +46,8 @@ public class QuickSort {
         }
         // 将基准值赋值给数据低位
         sortArray[low] = key;
-        // display();
-        // System.out.println("low:" + low);
+        display();
+        System.out.println("low:" + low);
         return low;
     }
     public void sort(int low, int high) {
@@ -56,3 +66,14 @@ public class QuickSort {
     }
 }
 
+/*
+
+
+打卡打印语句程序输出：
+5 4 7 8 2 7 8 5 6 3
+3 4 2 5 8 7 8 5 6 7 low:3
+2 3 4 5 8 7 8 5 6 7 low:1
+2 3 4 5 7 7 8 5 6 8 low:9
+2 3 4 5 6 7 5 7 8 8 low:7
+2 3 4 5 5 6 7 7 8 8 low:5
+ */
