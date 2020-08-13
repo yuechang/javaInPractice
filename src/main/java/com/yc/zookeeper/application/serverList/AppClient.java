@@ -31,6 +31,8 @@ public class AppClient {
     public void connectZookeeper(String hosts) throws Exception {
 
         zooKeeper = new ZooKeeper(hosts, SESSION_TIMEOUT, new Watcher() {
+
+            @Override
             public void process(WatchedEvent watchedEvent) {
                 String path = watchedEvent.getPath();
                 System.out.println("path:" + path);

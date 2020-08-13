@@ -99,8 +99,9 @@ public class JedisUtil {
 
         List<JedisShardInfo> list = new ArrayList<>();
 
-        if (ArrayUtils.isEmpty(hostAndIps))
+        if (ArrayUtils.isEmpty(hostAndIps)) {
             return null;
+        }
         for (String hostAndIp : hostAndIps) {
 
             String[] hostAndIpArr = hostAndIp.split(":");
@@ -141,8 +142,9 @@ public class JedisUtil {
             jedisPoolConfig = new JedisPoolConfig();
         }
         Set<String> sentinels = new HashSet<String>();
-        if (ArrayUtils.isEmpty(hostAndIps))
+        if (ArrayUtils.isEmpty(hostAndIps)) {
             return null;
+        }
         for (String hostAndIp : hostAndIps) {
             sentinels.add(hostAndIp);
         }
@@ -155,7 +157,8 @@ public class JedisUtil {
      */
     public static void close(Jedis jedis){
 
-        if (jedis != null)
+        if (jedis != null) {
             jedis.close();
+        }
     }
 }

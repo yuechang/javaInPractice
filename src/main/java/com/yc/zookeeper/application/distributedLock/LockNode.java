@@ -28,7 +28,13 @@ public class LockNode implements Comparable{
         this.name = name;
     }
 
-    // 根据字符串排序，从而获得有序的各个节点
+    /**
+     * 根据字符串排序，从而获得有序的各个节点
+     *
+     * @param object 比较对象
+     * @return 比较结果
+     */
+    @Override
     public int compareTo(Object object) {
 
         if (object instanceof LockNode){

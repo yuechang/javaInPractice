@@ -32,6 +32,7 @@ public class ConfigWatcher implements Watcher {
         System.out.printf("Read %s as %s \n",ConfigUpdater.PATH,value);
     }
 
+    @Override
     public void process(WatchedEvent watchedEvent) {
 
         if (watchedEvent.getType() == Event.EventType.NodeDataChanged){

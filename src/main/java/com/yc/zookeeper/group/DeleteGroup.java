@@ -29,8 +29,9 @@ public class DeleteGroup extends ConnectionWatcher{
         try {
 
             List<String> children = zooKeeper.getChildren(path, false);
-            if (null == children)
+            if (null == children) {
                 return;
+            }
 
             // 删除一个znode之前，我们需要先删除它的子节点
             for (String child : children){

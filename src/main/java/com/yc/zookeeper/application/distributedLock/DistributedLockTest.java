@@ -25,6 +25,7 @@ public class DistributedLockTest {
         for (int i = 0; i < count; i++){
             final DistributeLock node = new DistributeLock("/locks", args[0]);
             executor.submit(new Runnable() {
+                @Override
                 public void run() {
                     try {
                         Thread.sleep(1000);

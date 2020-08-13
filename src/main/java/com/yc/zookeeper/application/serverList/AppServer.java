@@ -33,6 +33,8 @@ public class AppServer {
     public void connectZookeeper(String hosts, String address) throws IOException, KeeperException, InterruptedException {
 
         ZooKeeper zooKeeper = new ZooKeeper(hosts, SESSION_TIMEOUT, new Watcher() {
+
+            @Override
             public void process(WatchedEvent watchedEvent) {
                 // 不做处理
             }

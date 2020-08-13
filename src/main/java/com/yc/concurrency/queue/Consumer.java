@@ -23,6 +23,7 @@ public class Consumer implements Runnable{
         this.queue = queue;
     }
 
+    @Override
     public void run() {
 
         System.out.println("启动消费者线程！~");

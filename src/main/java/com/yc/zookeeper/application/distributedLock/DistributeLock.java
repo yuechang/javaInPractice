@@ -240,6 +240,7 @@ public class DistributeLock {
                             String lastChildId = lastChildName.getName();
                             // 异步watcher处理
                             Stat stat = zooKeeper.exists(root + "/" + lastChildId, new Watcher() {
+                                @Override
                                 public void process(WatchedEvent watchedEvent) {
                                     acquireLock(mutex);
                                 }

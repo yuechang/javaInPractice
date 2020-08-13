@@ -40,8 +40,9 @@ public class ConditionBoundedBuffer<T> {
                 notFull.await();
             }
             items[tail] = x;
-            if (++tail == items.length)
+            if (++tail == items.length) {
                 tail = 0;
+            }
             ++count;
             notEmpty.signal();
             System.out.println("放入新元素："+ x + ",总数：" + count);
@@ -61,8 +62,9 @@ public class ConditionBoundedBuffer<T> {
             }
             T x = items[head];
             items[head] = null;
-            if(++head == items.length)
+            if(++head == items.length) {
                 head = 0;
+            }
             --count;
             notFull.signal();
             return x;
@@ -78,6 +80,8 @@ public class ConditionBoundedBuffer<T> {
         final ConditionBoundedBuffer<String> instance = new ConditionBoundedBuffer<String>();
 
         Thread thread1 = new Thread(new Runnable() {
+
+            @Override
             public void run() {
                 for (int i = 1 ; i < 13 ; i++){
                     try {
@@ -90,6 +94,8 @@ public class ConditionBoundedBuffer<T> {
         });
 
         Thread thread2 = new Thread(new Runnable() {
+
+            @Override
             public void run() {
 
                 try {

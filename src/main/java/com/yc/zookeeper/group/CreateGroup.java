@@ -34,6 +34,7 @@ public class CreateGroup implements Watcher{
      *  当客户端连接上了zookeeper服务器，Watcher将由process()函数接收一个连接成功的事件
      * @param watchedEvent
      */
+    @Override
     public void process(WatchedEvent watchedEvent) {
         if (watchedEvent.getState() == Event.KeeperState.SyncConnected){
             connectedSignal.countDown();

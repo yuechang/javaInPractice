@@ -63,19 +63,24 @@ public class DelayQueueTest {
         public int compareTo(Delayed other) {
 
             // 如果是它本身，返回0，表示相等
-            if (other == this)
+            if (other == this) {
                 return 0;
+            }
             if (other instanceof ScheduledFutureTask) {
                 ScheduledFutureTask<V> x = (ScheduledFutureTask<V>)other;
                 long diff = time - x.time;
-                if (diff < 0)
+                if (diff < 0) {
                     return -1;
-                else if (diff > 0)
+                }
+                else if (diff > 0) {
                     return 1;
-                else if (sequenceNumber < x.sequenceNumber)
+                }
+                else if (sequenceNumber < x.sequenceNumber) {
                     return -1;
-                else
+                }
+                else {
                     return 1;
+                }
             }
             long d = getDelay(TimeUnit.NANOSECONDS) - other.getDelay(TimeUnit.NANOSECONDS);
             return (d == 0) ? 0 : (d < 0) ? -1 : 1;

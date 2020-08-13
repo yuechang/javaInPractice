@@ -71,6 +71,7 @@ public class PossibleReordering {
 		b = 0;
 		
 		Thread one = new Thread(new Runnable() {
+			@Override
 			public void run() {
 				a = 1;
 				x = b;
@@ -78,6 +79,7 @@ public class PossibleReordering {
 		});
 		
 		Thread other = new Thread(new Runnable() {
+			@Override
 			public void run() {
 				b = 1;
 				y = a;

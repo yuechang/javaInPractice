@@ -38,8 +38,9 @@ public class TwoThreadPrintTest {
                     TwoThreadPrintTest.class.notify();
                     int number = count.getAndIncrement();
                     // 大于100，结束
-                    if (number > 100)
+                    if (number > 100) {
                         return;
+                    }
                     System.out.println(Thread.currentThread().getName() + "," + number);
                     // 如果为奇数，线程进入等待状态
                     if (number % 2 == 1) {

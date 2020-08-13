@@ -52,10 +52,12 @@ public class RpcFramework {
      * @throws Exception
      */
     public static void export(final Object service, int port) throws Exception {
-        if (service == null)
+        if (service == null) {
             throw new IllegalArgumentException("service instance == null");
-        if (port <= 0 || port > 65535)
+        }
+        if (port <= 0 || port > 65535) {
             throw new IllegalArgumentException("Invalid port " + port);
+        }
         System.out.println("Export service " + service.getClass().getName() + " on port " + port);
         ServerSocket server = new ServerSocket(port);
         for(;;) {
@@ -110,18 +112,22 @@ public class RpcFramework {
      */
     @SuppressWarnings("unchecked")
     public static <T> T refer(final Class<T> interfaceClass, final String host, final int port) throws Exception {
-        if (interfaceClass == null)
+        if (interfaceClass == null) {
             throw new IllegalArgumentException("Interface class == null");
-        if (! interfaceClass.isInterface())
+        }
+        if (! interfaceClass.isInterface()) {
             throw new IllegalArgumentException("The " + interfaceClass.getName() + " must be interface class!");
-        if (host == null || host.length() == 0)
+        }
+        if (host == null || host.length() == 0) {
             throw new IllegalArgumentException("Host == null!");
-        if (port <= 0 || port > 65535)
+        }
+        if (port <= 0 || port > 65535) {
             throw new IllegalArgumentException("Invalid port " + port);
+        }
         System.out.println("Get remote service " + interfaceClass.getName() + " from server " + host + ":" + port);
         return (T) Proxy.newProxyInstance(interfaceClass.getClassLoader(), new Class<?>[] {interfaceClass}, new InvocationHandler() {
 
-            //
+            @Override
             public Object invoke(Object proxy, Method method, Object[] arguments) throws Throwable {
                 Socket socket = new Socket(host, port);
                 try {

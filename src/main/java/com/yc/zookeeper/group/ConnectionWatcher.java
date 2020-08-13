@@ -35,6 +35,7 @@ public class ConnectionWatcher implements Watcher{
         zooKeeper.close();
     }
 
+    @Override
     public void process(WatchedEvent watchedEvent) {
         if (watchedEvent.getState() == Event.KeeperState.SyncConnected){
             connectionSignal.countDown();
