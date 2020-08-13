@@ -9,7 +9,7 @@ package com.yc.jvm.gc;
  * @ClassName: BigObjectAllocation
  * @Description: 大对象直接进入老年代示例
  * @date 2018/5/17 12:11
- * VM args：-Xmx20m -Xmx20m -Xmn10m -XX:PrintGCDetails -XX:SurvivorRatio=8 -XX:PretenureSizeThreshold=3145728
+ * VM args：-Xmx20m -Xmx20m -Xmn10m -XX:+PrintGCDetails -XX:SurvivorRatio=8 -XX:PretenureSizeThreshold=3145728
  */
 public class BigObjectAllocation {
 
@@ -28,7 +28,7 @@ public class BigObjectAllocation {
 环境信息：
 windows 7
 jdk1.8.0_101
-VM args：-Xmx20m -Xmx20m -Xmn10m -XX:PrintGCDetails -XX:SurvivorRatio=8 -XX:PretenureSizeThreshold=3145728
+VM args：-Xmx20m -Xmx20m -Xmn10m -XX:+PrintGCDetails -XX:SurvivorRatio=8 -XX:PretenureSizeThreshold=3145728
 
 3145728 = 3*1024*1024,单位字节(B)
 由于Parallel Scavenge收集器对PretenureSizeThreshold参数无效，于是也就还是分配到了Young Generation上
