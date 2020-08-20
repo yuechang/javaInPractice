@@ -10,7 +10,6 @@ import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
  * 原子更新整形的字段的更新器
  *
  * @author Yue Chang
- * @ClassName: AtomicIntegerFieldUpdaterTest
  * @date 2018/5/5 17:33
  */
 public class AtomicIntegerFieldUpdaterTest {
@@ -18,7 +17,7 @@ public class AtomicIntegerFieldUpdaterTest {
     /**
      * 创建原子更新器，并设置需要更新的对象类和对象的属性
      */
-    private static AtomicIntegerFieldUpdater<User> a =
+    private static final AtomicIntegerFieldUpdater<User> a =
             AtomicIntegerFieldUpdater.newUpdater(User.class, "old");
 
     public static void main(String[] args) {
