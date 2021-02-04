@@ -4,6 +4,7 @@ package com.yc.leetcode;
 /**
  * 两数相加
  * add-two-numbers
+ * https://leetcode-cn.com/problems/add-two-numbers/
  *
  * @author Yue Chang
  * @version 2.0
@@ -82,7 +83,7 @@ public class AddTwoNumbersSolution2 {
 
             int nextCarry = 0;
             int sum = value1 + value2 + carry;
-            int resultNextValue = 0;
+            int resultNextValue;
             // 有进位
             if (sum >= 10) {
                 nextCarry = 1;
