@@ -82,66 +82,153 @@ public class IntegerToRomanSolution {
      */
     public static final String M = "M";
 
+    /**
+     * 0
+     */
+    public static final int ZERO = 0;
 
+    /**
+     * 1
+     */
+    public static final int ONE = 1;
+
+    /**
+     * 2
+     */
+    public static final int TWO = 2;
+
+    /**
+     * 3
+     */
+    public static final int THREE = 3;
+
+    /**
+     * 4
+     */
+    public static final int FOUR = 4;
+
+    /**
+     * 5
+     */
+    public static final int FIVE = 5;
+
+
+    /**
+     * 6
+     */
+    public static final int SIX = 6;
+
+    /**
+     * 7
+     */
+    public static final int SEVEN = 7;
+
+
+    /**
+     * 8
+     */
+    public static final int EIGHT = 8;
+
+    /**
+     * 9
+     */
+    public static final int NINE = 9;
+
+    /**
+     * 10
+     */
+    public static final int TEN = 10;
+
+    /**
+     * 100
+     */
+    public static final int HUNDRED = 100;
+
+    /**
+     * 1000
+     */
+    public static final int THOUSAND = 1000;
+
+
+
+    /**
+     * 整型数字转换为罗马数字
+     *
+     * @param num 整型数字
+     * @return 罗马数字
+     */
     public String intToRoman(int num) {
 
         StringBuilder stringBuilder = new StringBuilder();
         String str = String.valueOf(num);
         int length = str.length();
-        int carryIndex = 1;
+        int carryIndex = ONE;
         for (int i = length - 1; i >= 0; i--) {
             String temp = str.charAt(i) + "";
             int intValue = Integer.parseInt(temp);
             String roman = getRoman(carryIndex, intValue);
-            // System.out.println("temp:" + temp + ",roman:" + roman + ",carryIndex:" + carryIndex);
             stringBuilder.insert(0, roman);
-            carryIndex *= 10;
+            carryIndex *= TEN;
         }
         return stringBuilder.toString();
     }
 
+    /**
+     * 根据进位获得对应的罗马数字
+     *
+     * @param carryIndex 进位
+     * @param intValue 值
+     * @return 罗马数字
+     */
     private String getRoman(int carryIndex, int intValue) {
-        if (1 == carryIndex) {
+        if (ONE == carryIndex) {
             return doGetRoman(I, V, X, intValue);
-        } else if (10 == carryIndex) {
+        } else if (TEN == carryIndex) {
             return doGetRoman(X, L, C, intValue);
-        } else if (100 == carryIndex) {
+        } else if (HUNDRED == carryIndex) {
             return doGetRoman(C, D, M, intValue);
-        } else if (1000 == carryIndex) {
+        } else if (THOUSAND == carryIndex) {
             return doGetRoman(M, "", "", intValue);
         }
         return "";
     }
 
+    /**
+     * 根据规律真正获取罗马数字1-9
+     *
+     * @param one 罗马数字1
+     * @param five 罗马数字5
+     * @param ten 罗马数字10
+     * @param intValue 整型数字值
+     * @return 罗马数字
+     */
     private String doGetRoman(String one, String five, String ten, int intValue) {
 
-        if (0 == intValue) {
+        if (ZERO == intValue) {
             return "";
-        } else if (intValue < 4 ) {
-            if (1 == intValue) {
+        } else if (intValue < FOUR ) {
+            if (ONE == intValue) {
                 return one;
-            } else if (2 == intValue) {
+            } else if (TWO == intValue) {
                 return one + one;
             } else {
                 return one + one + one;
             }
-        } else if (4 == intValue) {
+        } else if (FOUR == intValue) {
             return one + five;
-        } else if (5 == intValue) {
+        } else if (FIVE == intValue) {
             return five;
-        } else if (intValue < 9) {
-            if (6 == intValue) {
+        } else if (intValue < NINE) {
+            if (SIX == intValue) {
                 return five + one;
-            } else if (7 == intValue) {
+            } else if (SEVEN == intValue) {
                 return five + one + one;
             } else {
                 return five + one + one + one;
             }
-        } else if (9 == intValue) {
+        } else if (NINE == intValue) {
             return one + ten;
         }
         return "";
     }
-
-
 }
