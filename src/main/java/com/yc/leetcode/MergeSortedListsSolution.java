@@ -60,8 +60,7 @@ public class MergeSortedListsSolution {
         System.out.println(listNode);
         System.out.println();
 
-        lists = null;
-        listNode = instance.mergeKLists(lists);
+        listNode = instance.mergeKLists(null);
         System.out.println(listNode);
         System.out.println();
 
@@ -77,8 +76,8 @@ public class MergeSortedListsSolution {
             return null;
         }
 
-        ListNode resultListNode = null;
-        ListNode tempListNode = null;
+        ListNode resultListNode;
+        ListNode tempListNode;
 
         int minValue = (int)Math.pow(10, 4) + 1;
         // 值最小的索引
