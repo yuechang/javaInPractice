@@ -65,8 +65,7 @@ public class MergeSortedListsSolution2 {
         System.out.println(listNode);
         System.out.println();
 
-        lists = null;
-        listNode = instance.mergeKLists(lists);
+        listNode = instance.mergeKLists(null);
         System.out.println(listNode);
         System.out.println();
 
