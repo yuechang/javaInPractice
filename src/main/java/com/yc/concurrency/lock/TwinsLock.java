@@ -1,4 +1,4 @@
-/*!
+/*
  * Copyright(c) 2017 Yue Chang
  * MIT Licensed
  */
@@ -10,12 +10,12 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 
 /**
+ * 自定义共享同步器示例
+ *
  * @author Yue Chang
- * @ClassName: TwinsLock
- * @Description: 自定义共享同步器示例
  * @date 2018/4/29 22:46
  */
-public class TwinsLock implements Lock{
+public class TwinsLock implements Lock {
 
     private final Sync sync = new Sync(2);
     @Override
@@ -45,7 +45,7 @@ public class TwinsLock implements Lock{
 
     @Override
     public Condition newCondition() {
-        return null;
+        return newCondition();
     }
 
     private static final class Sync extends AbstractQueuedSynchronizer {

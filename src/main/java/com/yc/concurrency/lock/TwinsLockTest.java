@@ -10,9 +10,9 @@ import org.junit.Test;
 import java.util.concurrent.locks.Lock;
 
 /**
+ * 共享锁示例测试
+ *
  * @author Yue Chang
- * @ClassName: TwinsLockTest
- * @Description: 共享锁示例测试
  * @date 2018/4/29 23:01
  */
 public class TwinsLockTest {
@@ -30,7 +30,6 @@ public class TwinsLockTest {
                     try {
                         SleepUtils.second(1);
                         System.out.println(Thread.currentThread().getName());
-                        SleepUtils.second(1);
                     } finally {
                         lock.unlock();
                     }
@@ -41,6 +40,7 @@ public class TwinsLockTest {
         // 启动10个线程
         for (int i = 0; i < 10; i++){
             Worker worker = new Worker();
+            worker.setName("work" + i);
             worker.setDaemon(true);
             worker.start();
         }
@@ -51,4 +51,39 @@ public class TwinsLockTest {
         }
     }
 }
+/*
+成对出现的打印对应的信息，表示每次有两个线程获取到了锁，设置的资源数为2，也可以调节对应的资源数，控制并发
 
+work1
+work0
+
+work1
+work0
+
+work0
+work1
+
+work0
+work1
+
+work1
+work0
+
+work0
+work1
+
+work1
+work0
+
+work0
+work1
+
+work0
+work1
+
+work0
+work1
+
+
+
+ */
