@@ -29,8 +29,8 @@ import java.util.concurrent.CountDownLatch;
 
 
 /**
- * @ClassName: CountDownLatchTest
- * @Description: CountDownLatch测试类
+ * CountDownLatch测试类
+ *
  * @author Yue Chang
  * @date 2018年1月16日 上午11:31:26
  * @since 1.0
@@ -107,7 +107,8 @@ class MyThread implements Runnable{
 	public void run() {
 
 		String threadName = Thread.currentThread().getName().trim();
-		if ("t2".equals(threadName)) { // t2线程
+		// t2线程
+		if ("t2".equals(threadName)) {
 			try {
 				Thread.sleep(5000);
 				System.out.println("线程0：" + threadName);
@@ -116,7 +117,9 @@ class MyThread implements Runnable{
 			}
 			this.setNumber(1);
 			latch.countDown(); // 计数减1
-		} else if ("t1".equals(threadName)) { // t1线程
+		}
+		// t1线程
+		else if ("t1".equals(threadName)) {
 			try {
 				System.out.println("线程1：" + threadName);
 				latch.await(); // 阻塞等待计数为0
