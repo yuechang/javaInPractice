@@ -6,9 +6,9 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
+ * List sublist测试
+ *
  * @author Yue Chang
- * @ClassName: ListSubListTest
- * @Description: List sublist测试
  * @date 2018/9/12 16:12
  */
 public class ListTest {
