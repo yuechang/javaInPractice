@@ -10,9 +10,9 @@ import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * 各个MAP键值是否为空测试
+ *
  * @author Yue Chang
- * @ClassName: MapNullKeyAndValueTest
- * @Description: 各个MAP键值是否为空测试
  * @date 2018/9/7 16:12
  */
 public class MapNullKeyAndValueTest {
