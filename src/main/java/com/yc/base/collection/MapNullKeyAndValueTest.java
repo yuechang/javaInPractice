@@ -82,9 +82,13 @@ public class MapNullKeyAndValueTest {
 
 /*
 结论：
- - Hashtable/ConcurrentHashMap的键值均不能为null;
- - TreeMap的键不能为null，值可以为null;
+ - Hashtable/ConcurrentHashMap的键和值均不能为null;
  - HashMap的键值均可以为null;
+ - TreeMap的键不能为null，值可以为null;
+
+ Hashtable/ConcurrentHashMap为线程安全的集合类，在并发情况下，调用contains()和get()会存在歧义，不知道到底是没有获取到，还是放入的为null
+ HashMap为线程不安全集合类，单线程情况下，调用contains()和get()不会出现问题
+ TreeMap为key有序的map，key需要排序用，不能为空
 
 程序打印：
 java.lang.NullPointerException
