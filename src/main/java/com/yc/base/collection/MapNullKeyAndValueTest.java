@@ -1,7 +1,4 @@
-/*!
- * Copyright(c) 2017 Yue Chang
- * MIT Licensed
- */
+/* Copyright(c) 2022 Yue Chang and/or its affiliates. All right reserved. */
 package com.yc.base.collection;
 
 import java.util.HashMap;
